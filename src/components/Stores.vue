@@ -1,46 +1,119 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
 const storesByFloor = ref([
   {
     floor: "Ground Floor",
     stores: [
-      { name: "Yoshinoya", category: "Japanese Food Restaurant", logo: "src/logo/yoshinoya.png" },
-      { name: "Solaria", category: "Indonesian Food Restaurant", logo: "src/logo/solaria.png" },
-      { name: "Fore Coffee", category: "Coffee & Beverages", logo: "src/logo/fore-sg.png" },
-      { name: "Coffee Agam", category: "Coffee & Beverages", logo: "src/logo/agam web.png" },
-      { name: "Pisang Goreng Madu Bu Nanik", category: "Snacks & Desserts", logo: "src/logo/Logo PGM PNG.png" },
-      { name: "Paparonz Pizza", category: "Italian Food Restaurant", logo: "src/logo/paparonz.png" }
-    ]
+      {
+        name: "Yoshinoya",
+        category: "Japanese Food Restaurant",
+        logo: "/logo/yoshinoya.png",
+      },
+      {
+        name: "Solaria",
+        category: "Indonesian Food Restaurant",
+        logo: "/logo/solaria.png",
+      },
+      {
+        name: "Fore Coffee",
+        category: "Coffee & Beverages",
+        logo: "/logo/fore-sg.png",
+      },
+      {
+        name: "Coffee Agam",
+        category: "Coffee & Beverages",
+        logo: "/logo/agam web.png",
+      },
+      {
+        name: "Pisang Goreng Madu Bu Nanik",
+        category: "Snacks & Desserts",
+        logo: "/logo/Logo PGM PNG.png",
+      },
+      {
+        name: "Paparonz Pizza",
+        category: "Italian Food Restaurant",
+        logo: "/logo/paparonz.png",
+      },
+    ],
   },
   {
     floor: "Floor 1",
     stores: [
-      { name: "Sate Malibu", category: "Indonesian Food Restaurant", logo: "src/logo/Sate Malibu Tegal.png" },
-      { name: "Kiddie Crabs", category: "Playground", logo: "src/logo/logo Kiddie Crab.png" },
-      { name: "Gemilang Edukasi Indonesia (GEI)", category: "Education", logo: "src/logo/Gemilang.png" },
-      { name: "Gereja GBI", category: "Community", logo: "src/logo/Logo GBI new.png" },
-      { name: "Bakso Abang", category: "Indonesian Food Restaurant", logo: "src/logo/bakso abang web.png" },
-      { name: "Bakmie Now", category: "Noodles Restaurant", logo: "src/logo/Bakmi Now Logo.png" },
-      { name: "Dapur Biranda", category: "Indonesian Food Restaurant", logo: "src/logo/Dapur Biranda.png" },
-      { name: "Street Sushi", category: "Japanese Food Restaurant", logo: "src/logo/Street Sushi.png" },
-      { name: "Ayam Berkah", category: "Indonesian Food Restaurant", logo: "src/logo/Logo AyBer Signature.png" }
-    ]
+      {
+        name: "Sate Malibu",
+        category: "Indonesian Food Restaurant",
+        logo: "/logo/Sate Malibu Tegal.png",
+      },
+      {
+        name: "Kiddie Crabs",
+        category: "Playground",
+        logo: "/logo/logo Kiddie Crab.png",
+      },
+      {
+        name: "Gemilang Edukasi Indonesia (GEI)",
+        category: "Education",
+        logo: "/logo/Gemilang.png",
+      },
+      {
+        name: "Gereja GBI",
+        category: "Community",
+        logo: "/logo/Logo GBI new.png",
+      },
+      {
+        name: "Bakso Abang",
+        category: "Indonesian Food Restaurant",
+        logo: "/logo/bakso abang web.png",
+      },
+      {
+        name: "Bakmie Now",
+        category: "Noodles Restaurant",
+        logo: "/logo/Bakmi Now Logo.png",
+      },
+      {
+        name: "Dapur Biranda",
+        category: "Indonesian Food Restaurant",
+        logo: "/logo/Dapur Biranda.png",
+      },
+      {
+        name: "Street Sushi",
+        category: "Japanese Food Restaurant",
+        logo: "/logo/Street Sushi.png",
+      },
+      {
+        name: "Ayam Berkah",
+        category: "Indonesian Food Restaurant",
+        logo: "/logo/AyBer Signature.png",
+      },
+    ],
   },
   {
     floor: "Floor 2",
     stores: [
-      { name: "Anytime Fitness", category: "Gym & Fitness", logo: "src/logo/Anytime-Fitness-logowhite.png" },
-      { name: "Outbreak", category: "Entertainment", logo: "src/logo/Outbreak 1.png" },
-      { name: "Tomlex", category: "Bar & lounge", logo: "src/logo/tomlex.png" }
-    ]
+      {
+        name: "Anytime Fitness",
+        category: "Gym & Fitness",
+        logo: "/logo/Anytime-Fitness-logowhite.png",
+      },
+      {
+        name: "Outbreak",
+        category: "Entertainment",
+        logo: "/logo/Outbreak 1.jpg",
+      },
+      { name: "Tomlex", category: "Bar & lounge", logo: "/logo/tomlex.png" },
+    ],
   },
   {
     floor: "Rooftop",
     stores: [
-      { name: "Padeleon", category: "Sports & Recreation", logo: "https://via.placeholder.com/150x80/06FFA5/000000?text=Padeleon", comingSoon: true }
-    ]
-  }
+      {
+        name: "Padeleon",
+        category: "Sports & Recreation",
+        logo: "https://via.placeholder.com/150x80/06FFA5/000000?text=Padeleon",
+        comingSoon: true,
+      },
+    ],
+  },
 ]);
 </script>
 
@@ -51,10 +124,10 @@ const storesByFloor = ref([
         <h2 class="text-gradient">Our Tenants</h2>
         <p>Berbagai tenant pilihan di setiap lantai JTown Mall</p>
       </div>
-      
+
       <div class="floors-container">
-        <div 
-          v-for="(floorData, index) in storesByFloor" 
+        <div
+          v-for="(floorData, index) in storesByFloor"
           :key="index"
           class="floor-section"
         >
@@ -69,9 +142,9 @@ const storesByFloor = ref([
               :class="{ 'coming-soon': store.comingSoon }"
             >
               <div class="store-logo-container">
-                <img 
-                  :src="store.logo" 
-                  :alt="store.name" 
+                <img
+                  :src="store.logo"
+                  :alt="store.name"
                   class="store-logo"
                   loading="lazy"
                   decoding="async"
@@ -81,7 +154,9 @@ const storesByFloor = ref([
                 <div class="store-name">{{ store.name }}</div>
                 <div class="store-category">{{ store.category }}</div>
               </div>
-              <div v-if="store.comingSoon" class="coming-soon-badge">Coming Soon</div>
+              <div v-if="store.comingSoon" class="coming-soon-badge">
+                Coming Soon
+              </div>
             </div>
           </div>
         </div>
@@ -147,7 +222,9 @@ const storesByFloor = ref([
 .store-card:hover {
   transform: translateY(-8px);
   background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 20px rgba(16, 185, 129, 0.2);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.15),
+    0 0 20px rgba(16, 185, 129, 0.2);
   border-color: rgba(16, 185, 129, 0.3);
 }
 
