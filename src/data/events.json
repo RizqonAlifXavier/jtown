@@ -1,0 +1,124 @@
+[
+  {
+    "id": 1,
+    "title": "Lomba Mewarnai Bersama Sakatonik ABC & Kiddie crabs",
+    "subtitle": "Kompetisi mewarnai untuk anak-anak dengan hadiah menarik",
+    "date": "2 Februari 2026 | 10:00 - Selesai",
+    "endDate": "2026-02-02",
+    "badge": "Kids Event",
+    "gradient": "linear-gradient(135deg, #dc2626 0%, #991b1b 100%)",
+    "image": "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1200&h=600&fit=crop",
+    "detailImage": "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&h=500&fit=crop",
+    "detailBanner": "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=1200&h=300&fit=crop",
+    "category": "Kids Competition",
+    "location": "Atrium Lantai 1",
+    "fullDescription": "Ajak anak-anak untuk mengikuti lomba mewarnai bertema Imlek! Kompetisi seru dengan hadiah menarik untuk para pemenang. Gratis untuk semua anak yang ingin berpartisipasi!",
+    "terms": [
+      "Gratis untuk anak usia 4-12 tahun",
+      "Registrasi di tempat mulai pukul 09:30",
+      "Alat mewarnai disediakan panitia",
+      "Hadiah untuk 10 pemenang terbaik",
+      "Syarat dan ketentuan berlaku"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Fashion Show Busana Cheongsam",
+    "subtitle": "Peragaan busana tradisional Imlek yang memukau",
+    "date": "9 Februari 2026 | 15:00 - 17:00",
+    "endDate": "2026-02-09",
+    "badge": "Fashion",
+    "gradient": "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+    "image": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&h=600&fit=crop",
+    "category": "Fashion Show",
+    "location": "Atrium Lantai 1",
+    "fullDescription": "Saksikan keindahan busana tradisional Cheongsam dalam fashion show spektakuler! Menampilkan koleksi terbaru dengan desain modern yang memadukan tradisi dan gaya kontemporer.",
+    "terms": [
+      "Gratis untuk semua pengunjung",
+      "Tempat duduk terbatas, first come first served",
+      "Photo opportunity dengan model setelah show",
+      "Special discount untuk pembelian Cheongsam",
+      "Syarat dan ketentuan berlaku"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Titik Sua EPS 13 (Open Mic) BY Balai Pustaka",
+    "subtitle": "Panggung terbuka untuk menampilkan bakat Anda",
+    "date": "13 februari 26 | 18:00 - Selesai",
+    "endDate": "2026-02-13",
+    "badge": "Performance",
+    "gradient": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    "image": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=1200&h=600&fit=crop",
+    "category": "Open Mic",
+    "location": "Atrium Lantai 1",
+    "fullDescription": "Tunjukkan bakat Anda di panggung terbuka! Bernyanyi, bermain musik, atau tampilkan talenta lainnya. Kesempatan emas untuk tampil di depan pengunjung JTown Mall!",
+    "terms": [
+      "Registrasi peserta dibuka mulai pukul 17:00",
+      "Maksimal 3 menit per penampilan",
+      "Alat musik dasar disediakan",
+      "Hadiah untuk penampilan terbaik",
+      "Syarat dan ketentuan berlaku"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Soundstage Competition",
+    "subtitle": "Kompetisi band dan musik untuk musisi berbakat",
+    "date": "5 & 14 februari 2026 | 19:00 - Selesai",
+    "endDate": "2026-02-14",
+    "badge": "Competition",
+    "gradient": "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+    "image": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1200&h=600&fit=crop",
+    "category": "Music Competition",
+    "location": "Atrium Lantai 1",
+    "fullDescription": "Kompetisi musik untuk band dan musisi solo! Tunjukkan kemampuan bermusik Anda dan menangkan hadiah jutaan rupiah. Registrasi terbatas!",
+    "terms": [
+      "Registrasi dibuka hingga 10 Februari 2026",
+      "Maksimal 15 menit per penampilan",
+      "Sound system dan backline disediakan",
+      "Hadiah total jutaan rupiah",
+      "Syarat dan ketentuan berlaku"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Anilight 2 Anikura",
+    "subtitle": "event komunitas jepang cosplayer",
+    "date": "14 Februari 2026 | 15:00 - Selesai",
+    "endDate": "2026-02-14",
+    "badge": "Exhibition",
+    "gradient": "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+    "image": "https://images.unsplash.com/photo-1582582621959-48d27397dc69?w=1200&h=600&fit=crop",
+    "category": "Exhibition",
+    "location": "Atrium Lantai 1",
+    "fullDescription": "Jelajahi koleksi barang antik dan unik dari berbagai era! Pameran spesial yang menampilkan benda-benda bersejarah dan koleksi langka dari kolektor ternama.",
+    "terms": [
+      "Gratis untuk semua pengunjung",
+      "Dilarang menyentuh barang pameran",
+      "Photo diperbolehkan tanpa flash",
+      "Beberapa item tersedia untuk dijual",
+      "Syarat dan ketentuan berlaku"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Barongsai Performance",
+    "subtitle": "Pertunjukan barongsai spektakuler merayakan Imlek",
+    "date": "17 Februari 2026 | Sesi 1: 16:00 - 17:00 | Sesi 2: 18:30 - 20:00",
+    "endDate": "2026-02-17",
+    "badge": "Performance",
+    "gradient": "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
+    "image": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=1200&h=600&fit=crop",
+    "category": "Cultural Performance",
+    "location": "Lobby Utama",
+    "fullDescription": "Saksikan pertunjukan barongsai yang memukau! Aksi akrobatik dan tarian barongsai yang membawa keberuntungan di Tahun Baru Imlek. Jangan lewatkan momen spesial ini!",
+    "terms": [
+      "Gratis untuk semua pengunjung",
+      "2 sesi pertunjukan: 16:00 dan 18:30",
+      "Lokasi di area Lobby Utama",
+      "Angpao berhadiah untuk pengunjung beruntung",
+      "Syarat dan ketentuan berlaku"
+    ]
+  }
+]
