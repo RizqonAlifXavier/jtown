@@ -85,6 +85,11 @@ const storesByFloor = ref([
         category: "Indonesian Food Restaurant",
         logo: "/logo/AyBer Signature.png",
       },
+      {
+        name: "Teh Kotjok",
+        category: "Beverages",
+        logo: "/logo/teh kotjok.png",
+      },
     ],
   },
   {
