@@ -210,10 +210,9 @@ onMounted(() => {
 }
 
 .back-button {
-  position: relative;
-  display: inline-flex;
-  margin-top: 3rem;
-  margin-bottom: 2rem;
+  position: absolute;
+  top: 100px;
+  left: 2rem;
   padding: 0.875rem 1.75rem;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
@@ -223,6 +222,7 @@ onMounted(() => {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  display: flex;
   align-items: center;
   gap: 0.5rem;
   font-size: 0.95rem;

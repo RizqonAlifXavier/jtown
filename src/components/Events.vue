@@ -89,8 +89,9 @@ const viewEventDetail = (eventId) => {
 }
 
 .events-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 2rem;
   margin-top: 3rem;
   max-width: 1400px;
@@ -99,6 +100,7 @@ const viewEventDetail = (eventId) => {
 }
 
 .event-card {
+  flex: 0 1 400px;
   background: var(--card-bg);
   border-radius: 20px;
   overflow: hidden;
@@ -107,7 +109,6 @@ const viewEventDetail = (eventId) => {
   border: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
-  height: 100%;
 }
 
 .event-card:hover {

@@ -120,5 +120,24 @@
       "Angpao berhadiah untuk pengunjung beruntung",
       "Syarat dan ketentuan berlaku"
     ]
+  },
+  {
+    "id": 7,
+    "title": "Cook & Share Before Ramadan",
+    "subtitle": "Cooking Class by Chef Nathan",
+    "date": "18 Februari 2026 | 11:00 - Selesai",
+    "endDate": "2026-02-18",
+    "badge": "Cooking Competition",
+    "gradient": "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
+    "image": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=1200&h=600&fit=crop",
+    "category": "Cooking Competition",
+    "location": "Atrium Lantai 1",
+    "fullDescription": "Saksikan pertandingan dan sharing cooking class eksklusif bersama Chef Nathan! Pelajari teknik memasak profesional sebelum memasuki bulan suci Ramadan. Sesi ini terbuka untuk umum dan tersedia hadiah menarik bagi peserta aktif.",
+    "terms": [
+      "Gratis untuk umum",
+      "Pendaftaran dilakukan di lokasi acara",
+      "Dapatkan Sertifikat dan hadiah untuk pemenang",
+      "Syarat dan ketentuan berlaku"
+    ]
   }
 ]
