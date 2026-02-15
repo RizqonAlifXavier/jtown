@@ -1,28 +1,29 @@
 <script setup>
-import Navbar from './components/Navbar.vue';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+import MainLayout from './layouts/MainLayout.vue';
+import AdminLayout from './layouts/AdminLayout.vue';
+
+const route = useRoute();
+const layouts = {
+  MainLayout,
+  AdminLayout
+};
+
+const layout = computed(() => {
+  return layouts[route.meta.layout] || MainLayout;
+});
 </script>
 
 <template>
   <div id="app">
-    <!-- Full Page Animated Background -->
-    <!-- Solid White Background -->
-    <div class="page-background"></div>
-
-    <Navbar />
-    <router-view />
+    <component :is="layout">
+      <router-view />
+    </component>
   </div>
 </template>
 
 <style>
-/* Full Page Animated Background */
-.page-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  background-color: #ffffff;
-}
+/* Global reset or shared styles can go here */
 </style>
 

@@ -1,34 +1,28 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import eventsData from '../data/events.json';
+import { eventService } from '../services/eventService';
 
 const router = useRouter();
 
-// Function to check if event has ended
-const isEventEnded = (endDate) => {
-  if (!endDate) return false;
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const eventEnd = new Date(endDate);
-  eventEnd.setHours(23, 59, 59, 999);
-  return today > eventEnd;
-};
+// Load events from service
+const events = ref([]);
 
-// Load events from JSON file
-const events = ref(eventsData);
+onMounted(() => {
+  events.value = eventService.getAll();
+});
 
-// Track image loading state
-const imageLoaded = ref({});
-
-const onImageLoad = (eventId) => {
-  imageLoaded.value[eventId] = true;
-};
-
-const onImageError = (eventId) => {
-  console.warn(`Failed to load image for event ${eventId}`);
-  imageLoaded.value[eventId] = true; // Still mark as "loaded" to hide skeleton
-};
+// Computed property for sorted events: Active first, then Ended
+const sortedEvents = computed(() => {
+  return [...events.value].sort((a, b) => {
+    const aEnded = eventService.isEventEnded(a.endDate);
+    const bEnded = eventService.isEventEnded(b.endDate);
+    
+    if (aEnded && !bEnded) return 1;
+    if (!aEnded && bEnded) return -1;
+    return 0;
+  });
+});
 
 const viewEventDetail = (eventId) => {
   router.push(`/event/${eventId}`);
@@ -45,14 +39,14 @@ const viewEventDetail = (eventId) => {
       
       <div class="events-grid">
         <div
-          v-for="(event, index) in events"
+          v-for="(event, index) in sortedEvents"
           :key="event.id"
           class="event-card glass-card"
-          :class="{ 'event-ended': isEventEnded(event.endDate) }"
+          :class="{ 'event-ended': eventService.isEventEnded(event.endDate) }"
           :style="{ animationDelay: `${index * 0.1}s` }"
         >
           <!-- Status Badge for Ended Events -->
-          <div v-if="isEventEnded(event.endDate)" class="event-badge event-ended-badge">
+          <div v-if="eventService.isEventEnded(event.endDate)" class="event-badge event-ended-badge">
             Selesai
           </div>
           <!-- Regular Badge for Active Events -->
@@ -129,7 +123,6 @@ const viewEventDetail = (eventId) => {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   z-index: 10;
   white-space: nowrap;
-  max-width: 130px;
   text-align: center;
   line-height: 1.2;
 }
@@ -272,7 +265,7 @@ const viewEventDetail = (eventId) => {
   .event-badge {
     font-size: 0.7rem;
     padding: 0.35rem 0.85rem;
-    max-width: 110px;
+    max-width: none;
     top: 1rem;
     right: 1rem;
     letter-spacing: 0.8px;

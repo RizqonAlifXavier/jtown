@@ -1,28 +1,20 @@
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import eventsData from '../data/events.json';
+import { eventService } from '../services/eventService';
 
 const route = useRoute();
 const router = useRouter();
 
-// Function to check if event has ended
-const isEventEnded = (endDate) => {
-  if (!endDate) return false;
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const eventEnd = new Date(endDate);
-  eventEnd.setHours(23, 59, 59, 999);
-  return today > eventEnd;
+const event = ref(null);
+
+const loadEvent = () => {
+  const id = parseInt(route.params.id);
+  event.value = eventService.getById(id);
 };
 
-// Load events from JSON file
-const events = ref(eventsData);
-
-const event = computed(() => {
-  const id = parseInt(route.params.id);
-  return events.value.find(p => p.id === id);
-});
+onMounted(loadEvent);
+watch(() => route.params.id, loadEvent);
 
 const goBack = () => {
   router.push('/');
