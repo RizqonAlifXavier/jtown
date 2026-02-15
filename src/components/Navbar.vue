@@ -122,14 +122,15 @@ const goHome = () => {
   border: none;
   cursor: pointer;
   padding: 5px;
+  color: black;
 }
 
 .menu-toggle span {
   width: 25px;
-  height: 3px;
-  background: var(--color-light);
-  border-radius: 3px;
-  transition: all 0.3s ease;
+  height: 2.5px;
+  background: var(--color-dark);
+  border-radius: 4px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-links {
@@ -182,7 +183,11 @@ const goHome = () => {
 
 @media (max-width: 768px) {
   .navbar {
-    padding: 0.75rem 0;
+    padding: 0.85rem 0;
+  }
+
+  .nav-content {
+    padding: 0 1.25rem;
   }
 
   .logo {
@@ -210,13 +215,13 @@ const goHome = () => {
     height: 100vh;
     width: 70%;
     max-width: 300px;
-    background: rgba(15, 23, 42, 0.98);
+    background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(20px);
     flex-direction: column;
-    padding: 100px 2rem 2rem;
-    gap: 1.5rem;
-    transition: right 0.3s ease;
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 80px 1.5rem 2rem;
+    gap: 1rem;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-left: 1px solid rgba(0, 0, 0, 0.05);
   }
 
   .nav-links.active {
@@ -224,7 +229,24 @@ const goHome = () => {
   }
 
   .nav-links a {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
+    color: var(--color-text);
+    width: 100%;
+    padding: 0.85rem;
+    text-align: center;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    transition: all 0.2s ease;
+  }
+
+  .nav-links a:hover {
+    background: rgba(0, 0, 0, 0.06);
+    color: var(--color-primary);
+  }
+
+  .nav-links a::after {
+    display: none;
   }
 }
 
