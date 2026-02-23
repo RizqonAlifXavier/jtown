@@ -1,6 +1,10 @@
 <script setup>
 import { ref, onMounted, reactive, computed } from 'vue';
 import { eventService } from '../services/eventService';
+import { authService } from '../services/authService';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const events = ref([]);
 const isModalOpen = ref(false);
@@ -120,6 +124,15 @@ const handleReset = async () => {
     }
   }
 };
+
+const handleLogout = async () => {
+  try {
+    await authService.logout();
+    router.push('/login');
+  } catch (error) {
+    alert('Error logging out: ' + error.message);
+  }
+};
 </script>
 
 <template>
@@ -129,6 +142,7 @@ const handleReset = async () => {
       <div class="header-actions">
         <button @click="openAddModal" class="btn btn-primary">Add New Event</button>
         <button @click="handleReset" class="btn btn-secondary">Reset to Default</button>
+        <button @click="handleLogout" class="btn btn-outline">Logout</button>
       </div>
     </header>
 
@@ -286,6 +300,18 @@ const handleReset = async () => {
 .btn-secondary {
   background-color: #e2e8f0;
   color: #475569;
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+}
+
+.btn-outline:hover {
+  background-color: #f8fafc;
+  color: #ef4444;
+  border-color: #ef4444;
 }
 
 .stats-grid {
