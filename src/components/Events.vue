@@ -8,8 +8,8 @@ const router = useRouter();
 // Load events from service
 const events = ref([]);
 
-onMounted(() => {
-  events.value = eventService.getAll();
+onMounted(async () => {
+  events.value = await eventService.getAll();
 });
 
 // Computed property for sorted events: Active first, then Ended

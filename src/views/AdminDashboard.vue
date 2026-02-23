@@ -24,12 +24,19 @@ const initialFormState = {
 const form = reactive({ ...initialFormState });
 const newTerm = ref('');
 
-onMounted(() => {
-  loadEvents();
+const isLoading = ref(false);
+
+onMounted(async () => {
+  await loadEvents();
 });
 
-const loadEvents = () => {
-  events.value = eventService.getAll();
+const loadEvents = async () => {
+  isLoading.value = true;
+  try {
+    events.value = await eventService.getAll();
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 // Computed property for sorted events: Active first, then Ended
@@ -73,22 +80,44 @@ const removeTerm = (index) => {
   form.terms.splice(index, 1);
 };
 
-const handleSave = () => {
-  eventService.save({ ...form });
-  loadEvents();
-  closeModal();
-};
-
-const handleDelete = (id) => {
-  if (confirm('Are you sure you want to delete this event?')) {
-    eventService.delete(id);
-    loadEvents();
+const handleSave = async () => {
+  try {
+    isLoading.value = true;
+    await eventService.save({ ...form });
+    await loadEvents();
+    closeModal();
+  } catch (error) {
+    alert('Error saving event: ' + error.message);
+  } finally {
+    isLoading.value = false;
   }
 };
 
-const handleReset = () => {
-  if (confirm('Reset all events to original code defaults?')) {
-    events.value = eventService.resetToDefaults();
+const handleDelete = async (id) => {
+  if (confirm('Are you sure you want to delete this event?')) {
+    try {
+      isLoading.value = true;
+      await eventService.delete(id);
+      await loadEvents();
+    } catch (error) {
+      alert('Error deleting event: ' + error.message);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+};
+
+const handleReset = async () => {
+  if (confirm('Reset all events to original defaults? This will add any missing default events to Supabase.')) {
+    try {
+      isLoading.value = true;
+      await eventService.migrateLocalToSupabase();
+      await loadEvents();
+    } catch (error) {
+      alert('Error resetting events: ' + error.message);
+    } finally {
+      isLoading.value = false;
+    }
   }
 };
 </script>

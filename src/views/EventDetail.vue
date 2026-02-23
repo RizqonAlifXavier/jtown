@@ -8,9 +8,9 @@ const router = useRouter();
 
 const event = ref(null);
 
-const loadEvent = () => {
+const loadEvent = async () => {
   const id = parseInt(route.params.id);
-  event.value = eventService.getById(id);
+  event.value = await eventService.getById(id);
 };
 
 onMounted(loadEvent);
