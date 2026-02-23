@@ -78,28 +78,6 @@ onMounted(() => {
         <div class="content-grid">
           <!-- Main Content -->
           <div class="main-content">
-            <!-- Detail Banner (if available) -->
-            <section v-if="event.detailBanner" class="banner-section" data-animate="fade-up">
-              <img 
-                :src="event.detailBanner" 
-                :alt="`${event.title} Banner`" 
-                class="detail-banner"
-                loading="lazy"
-                decoding="async"
-              />
-            </section>
-
-            <!-- Detail Image (if available) -->
-            <section v-if="event.detailImage" class="image-section" data-animate="fade-up">
-              <img 
-                :src="event.detailImage" 
-                :alt="event.title" 
-                class="detail-image"
-                loading="lazy"
-                decoding="async"
-              />
-            </section>
-
             <section class="content-section" data-animate="fade-up">
               <h2>About This Event</h2>
               <p class="description">{{ event.fullDescription }}</p>
@@ -345,42 +323,8 @@ onMounted(() => {
   font-size: 1.2rem;
 }
 
-/* Banner and Image Sections */
-.banner-section {
-  margin-bottom: 40px;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.detail-banner {
-  width: 100%;
-  height: auto;
-  max-height: 300px;
-  object-fit: cover;
-  display: block;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-.image-section {
-  margin-bottom: 40px;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.detail-image {
-  width: 100%;
-  height: auto;
-  max-height: 500px;
-  object-fit: cover;
-  display: block;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-
-/* Sidebar */
-.sidebar {
+/* Main Content Section */
+.content-section h2 {
   display: flex;
   flex-direction: column;
   gap: 30px;
