@@ -35,6 +35,20 @@ export const newsService = {
     return news.map(mapFromDB);
   },
 
+  async getById(id) {
+    const { data, error } = await supabase
+      .from('news')
+      .select('*')
+      .eq('id', id)
+      .single();
+    
+    if (error) {
+      console.error('Error fetching news by id:', error);
+      return null;
+    }
+    return mapFromDB(data);
+  },
+
   async save(newsItem) {
     const isNew = !newsItem.id;
     const newsData = mapToDB(newsItem);

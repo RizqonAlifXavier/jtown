@@ -3,6 +3,7 @@ import Home from './views/Home.vue'
 import EventDetail from './views/EventDetail.vue'
 import AdminDashboard from './views/AdminDashboard.vue'
 import Login from './views/Login.vue'
+import NewsDetail from './views/NewsDetail.vue'
 import { authService } from './services/authService'
 
 const routes = [
@@ -16,6 +17,13 @@ const routes = [
     path: '/event/:id',
     name: 'EventDetail',
     component: EventDetail,
+    props: true,
+    meta: { layout: 'MainLayout' }
+  },
+  {
+    path: '/news/:id',
+    name: 'NewsDetail',
+    component: NewsDetail,
     props: true,
     meta: { layout: 'MainLayout' }
   },
