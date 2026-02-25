@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
+import { SpeedInsights } from '@vercel/speed-insights/vue';
 import MainLayout from './layouts/MainLayout.vue';
 import AdminLayout from './layouts/AdminLayout.vue';
 
@@ -20,6 +21,7 @@ const layout = computed(() => {
     <component :is="layout">
       <router-view />
     </component>
+    <SpeedInsights />
   </div>
 </template>
 
