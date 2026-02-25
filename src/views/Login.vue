@@ -12,11 +12,24 @@ const isLoading = ref(false);
 const handleLogin = async () => {
   errorMsg.value = '';
   isLoading.value = true;
+  
+  // Debug check for credentials (only logs if they are missing)
+  if (!import.meta.env.VITE_SUPABASE_URL) {
+    console.error('VITE_SUPABASE_URL is missing in environment!');
+  }
+
   try {
-    await authService.login(email.value, password.value);
+    const data = await authService.login(email.value, password.value);
+    console.log('Login success:', data);
     router.push('/admin');
   } catch (error) {
+    console.error('Login error details:', error);
     errorMsg.value = error.message || 'Login failed. Please check your credentials.';
+    
+    // Add specific hint for common Vercel/Supabase issues
+    if (error.message?.includes('fetch')) {
+      errorMsg.value += ' (Possible connection/environment issue)';
+    }
   } finally {
     isLoading.value = false;
   }
