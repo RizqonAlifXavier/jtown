@@ -1,12 +1,15 @@
 <script setup>
 import { ref, onMounted, reactive, computed } from 'vue';
 import { eventService } from '../services/eventService';
+import { newsService } from '../services/newsService';
 import { authService } from '../services/authService';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
 const events = ref([]);
+const newsItems = ref([]);
+const activeTab = ref('events'); // 'events' or 'news'
 const isModalOpen = ref(false);
 const isEditing = ref(false);
 
@@ -32,7 +35,17 @@ const isLoading = ref(false);
 
 onMounted(async () => {
   await loadEvents();
+  await loadNews();
 });
+
+const loadNews = async () => {
+  isLoading.value = true;
+  try {
+    newsItems.value = await newsService.getAll();
+  } finally {
+    isLoading.value = false;
+  }
+};
 
 const loadEvents = async () => {
   isLoading.value = true;
@@ -84,30 +97,40 @@ const removeTerm = (index) => {
   form.terms.splice(index, 1);
 };
 
-const handleSave = async () => {
-  try {
-    isLoading.value = true;
-    await eventService.save({ ...form });
-    await loadEvents();
-    closeModal();
-  } catch (error) {
-    alert('Error saving event: ' + error.message);
-  } finally {
-    isLoading.value = false;
-  }
-};
-
 const handleDelete = async (id) => {
-  if (confirm('Are you sure you want to delete this event?')) {
+  if (confirm('Are you sure you want to delete this?')) {
     try {
       isLoading.value = true;
-      await eventService.delete(id);
-      await loadEvents();
+      if (activeTab.value === 'events') {
+        await eventService.delete(id);
+        await loadEvents();
+      } else {
+        await newsService.delete(id);
+        await loadNews();
+      }
     } catch (error) {
-      alert('Error deleting event: ' + error.message);
+      alert('Error deleting: ' + error.message);
     } finally {
       isLoading.value = false;
     }
+  }
+};
+
+const handleSave = async () => {
+  try {
+    isLoading.value = true;
+    if (activeTab.value === 'events') {
+      await eventService.save({ ...form });
+      await loadEvents();
+    } else {
+      await newsService.save({ ...form });
+      await loadNews();
+    }
+    closeModal();
+  } catch (error) {
+    alert('Error saving: ' + error.message);
+  } finally {
+    isLoading.value = false;
   }
 };
 
@@ -138,45 +161,81 @@ const handleLogout = async () => {
 <template>
   <div class="admin-dashboard">
     <header class="admin-header">
-      <h1>Events Management</h1>
+      <h1>{{ activeTab === 'events' ? 'Events Management' : 'News Management' }}</h1>
       <div class="header-actions">
-        <button @click="openAddModal" class="btn btn-primary">Add New Event</button>
-        <button @click="handleReset" class="btn btn-secondary">Reset to Default</button>
+        <button @click="openAddModal" class="btn btn-primary">Add New {{ activeTab === 'events' ? 'Event' : 'News' }}</button>
+        <button v-if="activeTab === 'events'" @click="handleReset" class="btn btn-secondary">Reset to Default</button>
         <button @click="handleLogout" class="btn btn-outline">Logout</button>
       </div>
     </header>
 
+    <div class="admin-tabs">
+      <button 
+        :class="['tab-btn', { active: activeTab === 'events' }]" 
+        @click="activeTab = 'events'"
+      >
+        Events
+      </button>
+      <button 
+        :class="['tab-btn', { active: activeTab === 'news' }]" 
+        @click="activeTab = 'news'"
+      >
+        News
+      </button>
+    </div>
+
     <div class="stats-grid">
       <div class="stat-card">
-        <h3>Total Events</h3>
-        <p class="stat-value">{{ events.length }}</p>
+        <h3>Total {{ activeTab === 'events' ? 'Events' : 'News' }}</h3>
+        <p class="stat-value">{{ activeTab === 'events' ? events.length : newsItems.length }}</p>
       </div>
     </div>
 
-    <div class="events-list-card">
+    <div class="list-card">
       <table class="admin-table">
         <thead>
-          <tr>
+          <tr v-if="activeTab === 'events'">
             <th>ID</th>
             <th>Title</th>
             <th>Category</th>
             <th>Date</th>
             <th>Actions</th>
           </tr>
+          <tr v-else>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Published Date</th>
+            <th>Actions</th>
+          </tr>
         </thead>
         <tbody>
-          <tr v-for="event in sortedEvents" :key="event.id">
-            <td>#{{ event.id }}</td>
-            <td><strong>{{ event.title }}</strong></td>
-            <td><span class="badge">{{ event.badge }}</span></td>
-            <td>{{ event.date }}</td>
-            <td>
-              <div class="table-actions">
-                <button @click="openEditModal(event)" class="btn-icon">Edit</button>
-                <button @click="handleDelete(event.id)" class="btn-icon delete">Delete</button>
-              </div>
-            </td>
-          </tr>
+          <template v-if="activeTab === 'events'">
+            <tr v-for="event in sortedEvents" :key="event.id">
+              <td>#{{ event.id }}</td>
+              <td><strong>{{ event.title }}</strong></td>
+              <td><span class="badge">{{ event.badge }}</span></td>
+              <td>{{ event.date }}</td>
+              <td>
+                <div class="table-actions">
+                  <button @click="openEditModal(event)" class="btn-icon">Edit</button>
+                  <button @click="handleDelete(event.id)" class="btn-icon delete">Delete</button>
+                </div>
+              </td>
+            </tr>
+          </template>
+          <template v-else>
+            <tr v-for="news in newsItems" :key="news.id">
+              <td>#{{ news.id }}</td>
+              <td><strong>{{ news.title }}</strong></td>
+              <td>{{ news.date }}</td>
+              <td>
+                <div class="table-actions">
+                  <button @click="openEditModal(news)" class="btn-icon">Edit</button>
+                  <button @click="handleDelete(news.id)" class="btn-icon delete">Delete</button>
+                </div>
+              </td>
+            </tr>
+          </template>
         </tbody>
       </table>
     </div>
@@ -185,12 +244,12 @@ const handleLogout = async () => {
     <div v-if="isModalOpen" class="modal-overlay">
       <div class="modal-content">
         <header class="modal-header">
-          <h2>{{ isEditing ? 'Edit Event' : 'Add New Event' }}</h2>
+          <h2>{{ isEditing ? 'Edit' : 'Add New' }} {{ activeTab === 'events' ? 'Event' : 'News' }}</h2>
           <button @click="closeModal" class="btn-close">&times;</button>
         </header>
         
-        <form @submit.prevent="handleSave" class="event-form">
-          <div class="form-grid">
+        <form @submit.prevent="handleSave" class="admin-form">
+          <div v-if="activeTab === 'events'" class="form-grid">
             <div class="form-group">
               <label>Event Title</label>
               <input v-model="form.title" type="text" required placeholder="e.g. Summer Festival">
@@ -223,30 +282,49 @@ const handleLogout = async () => {
               <label>Image URL</label>
               <input v-model="form.image" type="url">
             </div>
-          </div>
-
-          <div class="form-group full-width">
-            <label>Full Description</label>
-            <textarea v-model="form.fullDescription" rows="4"></textarea>
-          </div>
-
-          <div class="form-group full-width">
-            <label>Terms & Conditions</label>
-            <div class="terms-input-group">
-              <input v-model="newTerm" @keyup.enter="addTerm" type="text" placeholder="Add a term and press Enter">
-              <button type="button" @click="addTerm" class="btn btn-secondary">Add</button>
+            
+            <div class="form-group full-width">
+              <label>Full Description</label>
+              <textarea v-model="form.fullDescription" rows="4"></textarea>
             </div>
-            <ul class="form-terms-list">
-              <li v-for="(term, index) in form.terms" :key="index">
-                {{ term }}
-                <button type="button" @click="removeTerm(index)" class="btn-remove">&times;</button>
-              </li>
-            </ul>
+
+            <div class="form-group full-width">
+              <label>Terms & Conditions</label>
+              <div class="terms-input-group">
+                <input v-model="newTerm" @keyup.enter="addTerm" type="text" placeholder="Add a term and press Enter">
+                <button type="button" @click="addTerm" class="btn btn-secondary">Add</button>
+              </div>
+              <ul class="form-terms-list">
+                <li v-for="(term, index) in form.terms" :key="index">
+                  {{ term }}
+                  <button type="button" @click="removeTerm(index)" class="btn-remove">&times;</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div v-else class="form-grid">
+            <div class="form-group full-width">
+              <label>News Title</label>
+              <input v-model="form.title" type="text" required placeholder="e.g. Pembukaan Tenant Baru">
+            </div>
+            <div class="form-group">
+              <label>Published Date</label>
+              <input v-model="form.date" type="date" required>
+            </div>
+            <div class="form-group">
+              <label>Image URL</label>
+              <input v-model="form.image" type="url" placeholder="https://...">
+            </div>
+            <div class="form-group full-width">
+              <label>Content</label>
+              <textarea v-model="form.content" rows="6" required placeholder="Tulis berita di sini..."></textarea>
+            </div>
           </div>
 
           <footer class="form-actions">
             <button type="button" @click="closeModal" class="btn btn-secondary">Cancel</button>
-            <button type="submit" class="btn btn-primary">{{ isEditing ? 'Update Event' : 'Create Event' }}</button>
+            <button type="submit" class="btn btn-primary">{{ isEditing ? 'Update' : 'Create' }}</button>
           </footer>
         </form>
       </div>
@@ -273,6 +351,44 @@ const handleLogout = async () => {
   margin: 0;
   color: #1e293b;
 }
+
+.admin-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 0.5rem;
+}
+
+.tab-btn {
+  padding: 0.5rem 1rem;
+  background: none;
+  border: none;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.tab-btn:hover {
+  color: #10b981;
+}
+
+.tab-btn.active {
+  color: #10b981;
+}
+
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -0.6rem;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #10b981;
+}
+
 
 .header-actions {
   display: flex;
@@ -409,86 +525,131 @@ const handleLogout = async () => {
 }
 
 .modal-content {
-  background: white;
-  border-radius: 16px;
+  background: #f8fafc;
+  border-radius: 24px;
   width: 100%;
-  max-width: 800px;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  max-width: 850px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .modal-header {
-  padding: 1.5rem 2rem;
+  padding: 1.75rem 2.5rem;
+  background: white;
   border-bottom: 1px solid #e2e8f0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: sticky;
-  top: 0;
-  background: white;
   z-index: 10;
 }
 
 .modal-header h2 {
   margin: 0;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
 }
 
 .btn-close {
-  background: none;
+  background: #f1f5f9;
   border: none;
-  font-size: 1.5rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   color: #64748b;
+  transition: all 0.2s;
 }
 
-.event-form {
-  padding: 2rem;
+.btn-close:hover {
+  background: #e2e8f0;
+  color: #1e293b;
+  transform: rotate(90deg);
+}
+
+.admin-form {
+  padding: 2.5rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Scrollbar styling for modal */
+.admin-form::-webkit-scrollbar {
+  width: 8px;
+}
+
+.admin-form::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.admin-form::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.admin-form::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
+  gap: 2rem;
+  margin-bottom: 2rem;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.625rem;
 }
 
 .form-group.full-width {
   grid-column: span 2;
-  margin-bottom: 1.5rem;
 }
 
 .form-group label {
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  color: #475569;
+  color: #334155;
+  margin-left: 0.25rem;
 }
 
 .form-group input, 
 .form-group textarea {
-  padding: 0.75rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  padding: 0.875rem 1.25rem;
+  background: white;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
   font-size: 1rem;
+  color: #1e293b;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #94a3b8;
 }
 
 .form-group input:focus, 
 .form-group textarea:focus {
   outline: none;
   border-color: #10b981;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+  background: white;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
 }
 
 .terms-input-group {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 .terms-input-group input {
@@ -498,37 +659,59 @@ const handleLogout = async () => {
 .form-terms-list {
   list-style: none;
   padding: 0;
-  margin-top: 1rem;
+  margin-top: 1.25rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 .form-terms-list li {
-  background: #f1f5f9;
-  padding: 0.25rem 0.75rem;
-  border-radius: 6px;
+  background: white;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
   font-size: 0.875rem;
+  color: #475569;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.625rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
 .btn-remove {
-  background: none;
+  background: #fee2e2;
   border: none;
   color: #ef4444;
   cursor: pointer;
   padding: 0;
-  font-size: 1.1rem;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+}
+
+.btn-remove:hover {
+  background: #fecaca;
+  transform: scale(1.1);
 }
 
 .form-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 1rem;
-  margin-top: 2rem;
-  padding-top: 1.5rem;
+  gap: 1.25rem;
+  padding: 1.75rem 2.5rem;
+  background: white;
   border-top: 1px solid #e2e8f0;
 }
+
+.form-actions .btn {
+  padding: 0.875rem 2rem;
+  border-radius: 12px;
+  min-width: 120px;
+}
+
 </style>
