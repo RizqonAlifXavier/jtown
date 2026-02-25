@@ -29,7 +29,7 @@ const routes = [
     path: '/admin',
     name: 'AdminDashboard',
     component: AdminDashboard,
-    meta: { layout: 'AdminLayout', requiresAuth: true }
+    meta: { layout: 'AdminLayout', requiresAuth: false }
   }
 ]
 
@@ -46,17 +46,8 @@ const router = createRouter({
 })
 
 // Navigation Guard
-router.beforeEach(async (to, from, next) => {
-  if (to.meta.requiresAuth) {
-    const session = await authService.getSession();
-    if (!session) {
-      next('/login');
-    } else {
-      next();
-    }
-  } else {
-    next();
-  }
+router.beforeEach((to, from, next) => {
+  next();
 });
 
 export default router
