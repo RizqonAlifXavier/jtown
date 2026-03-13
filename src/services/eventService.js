@@ -65,14 +65,18 @@ export const eventService = {
     const { data, error } = await supabase
       .from("events")
       .select("*")
-      .eq("id", id)
-      .single();
+      .eq("id", id);
 
     if (error) {
       console.error("Error fetching event by id:", error);
       return null;
     }
-    return mapFromDB(data);
+    
+    if (!data || data.length === 0) {
+      return null;
+    }
+    
+    return mapFromDB(data[0]);
   },
 
   async save(event) {
@@ -83,21 +87,21 @@ export const eventService = {
       const { data, error } = await supabase
         .from("events")
         .insert([eventData])
-        .select()
-        .single();
+        .select();
 
       if (error) throw error;
-      return mapFromDB(data);
+      if (!data || data.length === 0) throw new Error("Insert failed: No data returned from Supabase");
+      return mapFromDB(data[0]);
     } else {
       const { data, error } = await supabase
         .from("events")
         .update(eventData)
         .eq("id", event.id)
-        .select()
-        .single();
+        .select();
 
       if (error) throw error;
-      return mapFromDB(data);
+      if (!data || data.length === 0) throw new Error("Update failed: No data returned from Supabase. This might be due to RLS policies or the record not existing.");
+      return mapFromDB(data[0]);
     }
   },
 

@@ -3,6 +3,7 @@ import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import MainLayout from './layouts/MainLayout.vue';
 import AdminLayout from './layouts/AdminLayout.vue';
+import { Analytics } from '@vercel/analytics/vue';
 
 const route = useRoute();
 const layouts = {
@@ -16,6 +17,7 @@ const layout = computed(() => {
 </script>
 
 <template>
+  <Analytics />
   <div id="app">
     <component :is="layout">
       <router-view />
