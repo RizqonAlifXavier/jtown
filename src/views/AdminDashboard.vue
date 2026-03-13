@@ -97,6 +97,9 @@ const removeTerm = (index) => {
   form.terms.splice(index, 1);
 };
 
+const newPhoto = ref('');
+const newVideo = ref('');
+
 const handleDelete = async (id) => {
   if (confirm('Are you sure you want to delete this?')) {
     try {
@@ -676,6 +679,19 @@ const handleLogout = async () => {
   gap: 0.625rem;
   border: 1px solid #e2e8f0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.url-text {
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.border-top {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 2rem !important;
+  margin-top: 1rem;
 }
 
 .btn-remove {

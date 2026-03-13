@@ -19,6 +19,14 @@
       "Alat mewarnai disediakan panitia",
       "Hadiah untuk 10 pemenang terbaik",
       "Syarat dan ketentuan berlaku"
+    ],
+    "documentationPhotos": [
+      "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=800&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1503943330395-92f33dbac8b4?w=800&h=500&fit=crop"
+    ],
+    "documentationVideos": [
+      "https://www.w3schools.com/html/mov_bbb.mp4"
     ]
   },
   {

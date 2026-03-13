@@ -12,17 +12,11 @@ onMounted(async () => {
   events.value = await eventService.getAll();
 });
 
-// Computed property for sorted events: Active first, then Ended
-const sortedEvents = computed(() => {
-  return [...events.value].sort((a, b) => {
-    const aEnded = eventService.isEventEnded(a.endDate);
-    const bEnded = eventService.isEventEnded(b.endDate);
-    
-    if (aEnded && !bEnded) return 1;
-    if (!aEnded && bEnded) return -1;
-    return 0;
-  });
+// Filter events into upcoming and past
+const upcomingEvents = computed(() => {
+  return events.value.filter(event => !eventService.isEventEnded(event.endDate));
 });
+
 
 const viewEventDetail = (eventId) => {
   router.push(`/event/${eventId}`);
@@ -33,24 +27,20 @@ const viewEventDetail = (eventId) => {
   <section id="events" class="events-section section">
     <div class="container">
       <div class="section-header text-center">
-        <h2 class="text-gradient">Upcoming Events</h2>
-        <p>Jangan lewatkan event-event menarik di JTown Mall</p>
+        <h2 class="text-gradient">Events</h2>
+        <p>Jelajahi event-event menarik di JTown Mall</p>
       </div>
+
       
-      <div class="events-grid">
+      <!-- Upcoming Events Grid -->
+      <div class="events-grid" data-animate="fade-up">
         <div
-          v-for="(event, index) in sortedEvents"
+          v-for="(event, index) in upcomingEvents"
           :key="event.id"
           class="event-card glass-card"
-          :class="{ 'event-ended': eventService.isEventEnded(event.endDate) }"
           :style="{ animationDelay: `${index * 0.1}s` }"
         >
-          <!-- Status Badge for Ended Events -->
-          <div v-if="eventService.isEventEnded(event.endDate)" class="event-badge event-ended-badge">
-            Selesai
-          </div>
-          <!-- Regular Badge for Active Events -->
-          <div v-else class="event-badge" :style="{ background: event.gradient }">
+          <div class="event-badge" :style="{ background: event.gradient }">
             {{ event.badge }}
           </div>
           
@@ -71,6 +61,9 @@ const viewEventDetail = (eventId) => {
             </button>
           </div>
         </div>
+        <div v-if="upcomingEvents.length === 0" class="no-events">
+          <p>Belum ada event mendatang saat ini.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -82,17 +75,51 @@ const viewEventDetail = (eventId) => {
   position: relative;
 }
 
-.events-grid {
+.events-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 50px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tab-btn {
+  padding: 0.75rem 2rem;
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab-btn.active {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.events-grid, .past-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
-  margin-top: 3rem;
   max-width: 1400px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
 }
 
-.event-card {
+.past-grid {
+  grid-template-columns: 1fr;
+}
+
+.event-card, .past-event-card {
   background: var(--card-bg);
   border-radius: 20px;
   overflow: hidden;
@@ -122,24 +149,6 @@ const viewEventDetail = (eventId) => {
   letter-spacing: 0.8px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   z-index: 10;
-  white-space: nowrap;
-  text-align: center;
-  line-height: 1.2;
-}
-
-/* Ended Event Styling */
-.event-ended {
-  opacity: 0.7;
-  filter: grayscale(30%);
-}
-
-.event-ended:hover {
-  opacity: 0.85;
-  transform: translateY(-10px);
-}
-
-.event-ended-badge {
-  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%) !important;
 }
 
 .event-content {
@@ -173,7 +182,6 @@ const viewEventDetail = (eventId) => {
 }
 
 .event-date svg {
-  flex-shrink: 0;
   color: var(--color-primary);
 }
 
@@ -187,52 +195,82 @@ const viewEventDetail = (eventId) => {
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+  transition: all 0.3s ease;
   margin-top: auto;
 }
 
-.btn-detail::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
+/* Past Documentation Styles */
+.past-event-card {
+  padding: 2rem;
+}
+
+.past-event-header {
+  margin-bottom: 1.5rem;
+}
+
+.past-event-header h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.past-event-date {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+.documentation-gallery {
+  width: 100%;
+  overflow: hidden;
+}
+
+.gallery-scroll {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) transparent;
+}
+
+.gallery-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.gallery-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 10px;
+}
+
+.gallery-item {
+  flex: 0 0 300px;
+  height: 200px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gallery-item img, .gallery-item video {
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s;
+  object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
-.btn-detail:hover::before {
-  left: 100%;
+.gallery-item:hover img {
+  transform: scale(1.05);
 }
 
-.btn-detail:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+.video-item {
+  background: #000;
 }
 
-.btn-detail:active {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-}
-
-/* Disabled state for ended events */
-.event-ended .btn-detail {
-  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  cursor: default;
-}
-
-.event-ended .btn-detail:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+.no-events, .no-documentation {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem;
+  color: var(--color-text-secondary);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
 }
 
 /* Tablet */
@@ -249,57 +287,26 @@ const viewEventDetail = (eventId) => {
     padding: 60px 0;
   }
 
+  .events-tabs {
+    width: 90%;
+    flex-direction: row;
+    font-size: 0.9rem;
+  }
+
+  .tab-btn {
+    padding: 0.6rem 1rem;
+    flex: 1;
+    font-size: 0.8rem;
+  }
+
   .events-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 
-  .event-card {
-    min-height: 280px;
-  }
-
-  .event-content h3 {
-    font-size: 1.5rem;
-  }
-
-  .event-badge {
-    font-size: 0.7rem;
-    padding: 0.35rem 0.85rem;
-    max-width: none;
-    top: 1rem;
-    right: 1rem;
-    letter-spacing: 0.8px;
-  }
-
-  .event-content {
-    padding: 2.75rem 1.75rem 2rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .events-section {
-    padding: 40px 0;
-  }
-
-  .event-content h3 {
-    font-size: 1.25rem;
-  }
-
-  .event-subtitle {
-    font-size: 0.9rem;
-  }
-
-  .event-date {
-    font-size: 0.85rem;
-  }
-
-  .event-content {
-    padding: 2.5rem 1.5rem 1.75rem;
-  }
-
-  .btn-detail {
-    padding: 0.875rem 1.25rem;
-    font-size: 0.9rem;
+  .gallery-item {
+    flex: 0 0 250px;
+    height: 160px;
   }
 }
 </style>
