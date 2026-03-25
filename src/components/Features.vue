@@ -1,41 +1,49 @@
 <script setup>
 import { ref } from 'vue';
 
+import imgPaddle from '../logo/paddle.png';
+import imgCharging from '../logo/charging-station.png';
+import imgFood from '../logo/food.png';
+import imgCoffee from '../logo/coffe.png';
+import imgWorkout from '../logo/workout.png';
+import imgEntertain from '../logo/entertain.png';
+import imgCommunity from '../logo/social-media.png';
+
 const features = ref([
   {
-    icon: `<img src="src/logo/paddle.png" class="icon-float" alt="">`,
+    icon: `<img src="${imgPaddle}" class="icon-float" alt="">`,
     title: 'Sports & Recreation',
     description: 'Padeleon di rooftop - Fasilitas olahraga Padel modern pertama di Jakarta Timur. Rasakan sensasi berolahraga di ketinggian!',
     isHighlighted: true
   },
   {
-    icon: `<img src="src/logo/charging-station.png" class="icon-pulse" alt="">`,
+    icon: `<img src="${imgCharging}" class="icon-pulse" alt="">`,
     title: 'Ultra Fast Charging Station',
     description: 'Pertama di Jakarta Timur! Stasiun pengisian daya kendaraan listrik Ultra Fast Charging dengan daya 240kW, tersedia untuk semua jenis mobil listrik demi kenyamanan pengunjung.',
     isHighlighted: true
   },
   {
-    icon: `<img src="src/logo/food.png" alt="">`,
+    icon: `<img src="${imgFood}" alt="">`,
     title: 'Kuliner Beragam',
     description: 'Nikmati berbagai pilihan kuliner dari Yoshinoya, Solaria, Sate Malibu, Street Sushi, dan banyak lagi di setiap lantai'
   },
   {
-    icon: `<img src="src/logo/coffe .png" alt="">`,
+    icon: `<img src="${imgCoffee}" alt="">`,
     title: 'Coffee & Beverages',
     description: 'Fore Coffee dan Coffee Agam siap menemani hari Anda dengan kopi berkualitas dan suasana nyaman'
   },
   {
-    icon: `<img src="src/logo/workout.png" alt="">`,
+    icon: `<img src="${imgWorkout}" alt="">`,
     title: 'Fitness & Wellness',
     description: 'Anytime Fitness di lantai 2 untuk menjaga kesehatan dan kebugaran Anda kapan saja'
   },
   {
-    icon: `<img src="src/logo/entertain.png" alt="">`,
+    icon: `<img src="${imgEntertain}" alt="">`,
     title: 'Entertainment',
     description: 'Outbreak dan berbagai hiburan menarik untuk mengisi waktu luang bersama keluarga'
   },
   {
-    icon: `<img src="src/logo/social-media.png" alt="">`,
+    icon: `<img src="${imgCommunity}" alt="">`,
     title: 'Community Space',
     description: 'Gereja GBI dan ruang komunitas untuk kegiatan spiritual dan sosial'
   }
@@ -91,26 +99,26 @@ const features = ref([
 }
 
 .feature-card.highlighted {
-  border: 2px solid #43e97b;
-  background: rgba(67, 233, 123, 0.05);
+  border: 2px solid var(--color-dark);
+  background: rgba(15, 23, 42, 0.02);
   transform: scale(1.05);
-  box-shadow: 0 15px 40px rgba(67, 233, 123, 0.15);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
   position: relative;
   overflow: hidden;
 }
 
 .feature-card.highlighted:hover {
   transform: scale(1.08) translateY(-5px);
-  background: rgba(67, 233, 123, 0.08);
-  box-shadow: 0 20px 50px rgba(67, 233, 123, 0.2);
+  background: rgba(15, 23, 42, 0.04);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
 }
 
 .exclusive-badge {
   position: absolute;
   top: 15px;
   right: -35px;
-  background: #43e97b;
-  color: #000;
+  background: var(--color-dark);
+  color: #fff;
   font-size: 0.75rem;
   font-weight: 800;
   padding: 5px 40px;
@@ -183,7 +191,7 @@ const features = ref([
 }
 
 .highlighted .feature-icon {
-  background: #43e97b;
+  background: var(--color-dark);
   color: white;
 }
 
