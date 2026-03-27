@@ -40,7 +40,7 @@ const features = ref([
   {
     icon: `<img src="${imgEntertain}" alt="">`,
     title: 'Entertainment',
-    description: 'Outbreak dan berbagai hiburan menarik untuk mengisi waktu luang bersama keluarga'
+    description: 'Outbreak dan kiddie crabs menarik untuk mengisi waktu luang bersama keluarga'
   },
   {
     icon: `<img src="${imgCommunity}" alt="">`,
