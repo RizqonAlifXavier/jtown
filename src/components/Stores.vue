@@ -127,12 +127,12 @@ const storesByFloor = ref([
     ],
   },
   {
-    floor: "Rooftop",
+    floor: "Floor 3",
     stores: [
       {
         name: "Padeleon",
         category: "Sports & Recreation",
-        logo: "https://via.placeholder.com/150x80/06FFA5/000000?text=Padeleon",
+        logo: "/logo/Padeleon.png",
         comingSoon: false,
         hours: "Setiap Hari | 06.00 - 23.00",
       },
