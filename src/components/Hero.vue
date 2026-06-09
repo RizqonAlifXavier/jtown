@@ -12,6 +12,8 @@ onMounted(() => {
 
 <template>
   <section id="home" class="hero-section">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
     <div class="container">
       <div class="hero-content" :class="{ 'fade-in-up': isVisible }">
         <h1 class="hero-title">
@@ -38,6 +40,30 @@ onMounted(() => {
   justify-content: center;
   padding-top: 80px;
   position: relative;
+  overflow: hidden; /* Contains the blurred background edges */
+}
+
+.hero-bg {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  background-image: url('/BG-Homepage.jpeg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(3px); /* Reduced blur as requested */
+  z-index: 1;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.65); /* Keeps text legible over the background */
+  z-index: 2;
 }
 
 /* Hero Content */
@@ -47,7 +73,7 @@ onMounted(() => {
   margin: 0 auto;
   opacity: 0;
   position: relative;
-  z-index: 1;
+  z-index: 3;
 }
 
 .hero-content.fade-in-up {

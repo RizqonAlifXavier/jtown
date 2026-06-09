@@ -11,39 +11,39 @@ import imgCommunity from '../logo/social-media.png';
 
 const features = ref([
   {
-    icon: `<img src="${imgPaddle}" class="icon-float" alt="">`,
+    icon: `<img loading="lazy" src="${imgPaddle}" class="icon-float" alt="">`,
     title: 'Sports & Recreation',
     description: 'Padeleon di rooftop - Fasilitas olahraga Padel modern pertama di Jakarta Timur. Rasakan sensasi berolahraga di ketinggian!',
     isHighlighted: true
   },
   {
-    icon: `<img src="${imgCharging}" class="icon-pulse" alt="">`,
+    icon: `<img loading="lazy" src="${imgCharging}" class="icon-pulse" alt="">`,
     title: 'Ultra Fast Charging Station',
     description: 'Pertama di Jakarta Timur! Stasiun pengisian daya kendaraan listrik Ultra Fast Charging dengan daya 240kW, tersedia untuk semua jenis mobil listrik demi kenyamanan pengunjung.',
     isHighlighted: true
   },
   {
-    icon: `<img src="${imgFood}" alt="">`,
+    icon: `<img loading="lazy" src="${imgFood}" alt="">`,
     title: 'Kuliner Beragam',
     description: 'Nikmati berbagai pilihan kuliner dari Yoshinoya, Solaria, Sate Malibu, Street Sushi, dan banyak lagi di setiap lantai'
   },
   {
-    icon: `<img src="${imgCoffee}" alt="">`,
+    icon: `<img loading="lazy" src="${imgCoffee}" alt="">`,
     title: 'Coffee & Beverages',
     description: 'Fore Coffee dan Coffee Agam siap menemani hari Anda dengan kopi berkualitas dan suasana nyaman'
   },
   {
-    icon: `<img src="${imgWorkout}" alt="">`,
+    icon: `<img loading="lazy" src="${imgWorkout}" alt="">`,
     title: 'Fitness & Wellness',
     description: 'Anytime Fitness di lantai 2 untuk menjaga kesehatan dan kebugaran Anda kapan saja'
   },
   {
-    icon: `<img src="${imgEntertain}" alt="">`,
+    icon: `<img loading="lazy" src="${imgEntertain}" alt="">`,
     title: 'Entertainment',
     description: 'Outbreak dan kiddie crabs menarik untuk mengisi waktu luang bersama keluarga'
   },
   {
-    icon: `<img src="${imgCommunity}" alt="">`,
+    icon: `<img loading="lazy" src="${imgCommunity}" alt="">`,
     title: 'Community Space',
     description: 'Gereja GBI dan ruang komunitas untuk kegiatan spiritual dan sosial'
   }

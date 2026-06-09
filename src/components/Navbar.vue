@@ -53,6 +53,7 @@ const goHome = () => {
 
         <div class="nav-links" :class="{ 'active': isMenuOpen }">
           <a @click="scrollToSection('home')">Home</a>
+          <a @click="scrollToSection('promotions')">Promotions</a>
           <a @click="scrollToSection('events')">Events</a>
           <a @click="scrollToSection('features')">Features</a>
           <a @click="scrollToSection('stores')">Stores</a>

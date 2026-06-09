@@ -9,31 +9,37 @@ const storesByFloor = ref([
         name: "Yoshinoya",
         category: "Japanese Food Restaurant",
         logo: "/logo/yoshinoya.png",
+        hours: "Setiap Hari | 10.00 - 22.00",
       },
       {
         name: "Solaria",
         category: "Indonesian Food Restaurant",
         logo: "/logo/solaria.png",
+        hours: "Setiap Hari | 08.00 - 22.00",
       },
       {
         name: "Fore Coffee",
         category: "Coffee & Beverages",
         logo: "/logo/fore-sg.png",
+        hours: "Setiap Hari | 08.00 - 23.00",
       },
       {
         name: "Coffee Agam",
         category: "Coffee & Beverages",
         logo: "/logo/agam web.png",
+        hours: "Setiap Hari | 09.00 - 22.00",
       },
       {
         name: "Pisang Goreng Madu Bu Nanik",
         category: "Snacks & Desserts",
         logo: "/logo/Logo PGM PNG.png",
+        hours: "Setiap Hari | 07.00 - 22.00",
       },
       {
         name: "Paparonz Pizza",
         category: "Italian Food Restaurant",
         logo: "/logo/paparonz.png",
+        hours: "Setiap Hari | 10.00 - 22.00",
       },
     ],
   },
@@ -44,51 +50,61 @@ const storesByFloor = ref([
         name: "Sate Malibu",
         category: "Indonesian Food Restaurant",
         logo: "/logo/Sate Malibu Tegal.png",
+        hours: "Setiap Hari | 10.00 - 22.00",
       },
       {
         name: "Kiddie Crabs",
         category: "Playground",
         logo: "/logo/logo Kiddie Crab.png",
+        hours: "Setiap Hari | 10.00 - 22.00",
       },
       {
         name: "Gemilang Edukasi Indonesia (GEI)",
         category: "Education",
         logo: "/logo/Gemilang.png",
+        hours: "Setiap Hari | 10.00 - 22.00",
       },
       {
         name: "Gereja GBI",
         category: "Community",
         logo: "/logo/Logo GBI new.png",
+        hours: "Minggu | 09.00 - 15.00",
       },
       {
         name: "Bakso Abang",
         category: "Indonesian Food Restaurant",
         logo: "/logo/bakso abang web.png",
+        hours: "Setiap Hari | 10.00 - 22.00",
       },
       {
         name: "Bakmie Now",
         category: "Noodles Restaurant",
         logo: "/logo/Bakmi Now Logo.png",
+        hours: "Setiap Hari | 10.00 - 22.00",
       },
       {
         name: "Dapur Biranda",
         category: "Indonesian Food Restaurant",
         logo: "/logo/Dapur Biranda.png",
+        hours: "Setiap Hari | 10.00 - 22.00",
       },
       {
         name: "Street Sushi",
         category: "Japanese Food Restaurant",
         logo: "/logo/Street Sushi.png",
+        hours: "Setiap Hari | 10.00 - 22.00",
       },
       {
         name: "Ayam Berkah",
         category: "Indonesian Food Restaurant",
         logo: "/logo/AyBer Signature.png",
+        hours: "Setiap Hari | 10.00 - 22.00",
       },
       {
         name: "Teh Kotjok",
         category: "Beverages",
         logo: "/logo/teh kotjok.png",
+        hours: "Setiap Hari | 10.00 - 22.00",
       },
     ],
   },
@@ -99,13 +115,15 @@ const storesByFloor = ref([
         name: "Anytime Fitness",
         category: "Gym & Fitness",
         logo: "/logo/Anytime-Fitness-logowhite.png",
+        hours: "Setiap Hari | 24 Jam",
       },
       {
         name: "Outbreak",
         category: "Entertainment",
         logo: "/logo/Outbreak 1.jpg",
+        hours: "Setiap Hari | 12.00 - 03.00",
       },
-      { name: "Tomlex", category: "Bar & lounge", logo: "/logo/tomlex.png" },
+      { name: "Tomlex", category: "Bar & lounge", logo: "/logo/tomlex.png", hours: "Senin - Sabtu | 11.00 - 03.00 " },
     ],
   },
   {
@@ -115,7 +133,8 @@ const storesByFloor = ref([
         name: "Padeleon",
         category: "Sports & Recreation",
         logo: "https://via.placeholder.com/150x80/06FFA5/000000?text=Padeleon",
-        comingSoon: true,
+        comingSoon: false,
+        hours: "Setiap Hari | 06.00 - 23.00",
       },
     ],
   },
@@ -158,6 +177,10 @@ const storesByFloor = ref([
               <div class="store-info">
                 <div class="store-name">{{ store.name }}</div>
                 <div class="store-category">{{ store.category }}</div>
+                <div class="store-hours" v-if="store.hours">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  {{ store.hours }}
+                </div>
               </div>
               <div v-if="store.comingSoon" class="coming-soon-badge">
                 Coming Soon
@@ -275,6 +298,30 @@ const storesByFloor = ref([
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+}
+
+.store-hours {
+  display: flex;
+  align-items: center; /* keep centered if 1 line, or flex-start if we want top align. let's use center */
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--color-emerald);
+  font-weight: 600;
+  background: rgba(16, 185, 129, 0.1);
+  padding: 0.4rem 0.8rem;
+  border-radius: 12px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.store-hours svg {
+  flex-shrink: 0;
 }
 
 .coming-soon-badge {

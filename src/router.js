@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from './views/Home.vue'
-import EventDetail from './views/EventDetail.vue'
-import AdminDashboard from './views/AdminDashboard.vue'
-import Login from './views/Login.vue'
-import NewsDetail from './views/NewsDetail.vue'
 import { authService } from './services/authService'
+
+const Home = () => import('./views/Home.vue')
+const EventDetail = () => import('./views/EventDetail.vue')
+const AdminDashboard = () => import('./views/AdminDashboard.vue')
+const Login = () => import('./views/Login.vue')
+const NewsDetail = () => import('./views/NewsDetail.vue')
 
 const routes = [
   {
